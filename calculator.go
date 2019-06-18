@@ -27,7 +27,9 @@ func calculate(words []string) {
 		} else {
 			switch word {
 			case "+":
-				total, err = add(total, words[index+1])
+				total, err = sum(total, words[index+1])
+			case "*":
+				total, err = multiply(total, words[index+1])
 			}
 		}
 		if err != nil {
@@ -45,11 +47,20 @@ func checkIsNumber(word string) bool {
 	return false
 }
 
-func add(first int64, second string) (int64, error) {
+func sum(first int64, second string) (int64, error) {
 	if checkIsNumber(second) {
 		secondNum, _ := strconv.ParseInt(second, 10, 64)
 		sum := first + secondNum
 		return sum, nil
+	}
+	return 0, errors.New("not 2 numbers")
+}
+
+func multiply(first int64, second string) (int64, error) {
+	if checkIsNumber(second) {
+		secondNum, _ := strconv.ParseInt(second, 10, 64)
+		result := first * secondNum
+		return result, nil
 	}
 	return 0, errors.New("not 2 numbers")
 }
